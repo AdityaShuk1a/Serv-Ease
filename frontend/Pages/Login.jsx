@@ -14,14 +14,19 @@ import {
   ScrollView
 } from 'react-native';
 import {styles} from '../Styles/authStyles';
-
+import {useNavigation} from '@react-navigation/native';
+import { useContext } from 'react';
+import { UserContext } from '../App';
+import axios from 'axios';
 const {height} = Dimensions.get('window'); // Get screen height
 const secondaryColor = '#ebefee';
 
 function Login() {
+  const {user , setUser} = useContext(UserContext);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [data, setData] = useState('');
+  const navigation = useNavigation();
   useEffect(() => {
     const authUser = async ()  => {
       const getData = await axios
@@ -137,6 +142,7 @@ function Login() {
               </View> */}
               <Pressable
                 onPress={() => {
+                  navigation.navigate('Signup');
                 }}>
                 <Text style={styles.signupText}>
                   Not have a account? Sign Up

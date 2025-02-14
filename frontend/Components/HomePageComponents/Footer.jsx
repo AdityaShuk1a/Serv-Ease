@@ -3,12 +3,14 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ADIcon from 'react-native-vector-icons/AntDesign';
 import MTIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from '@react-navigation/native';
 const {width} = Dimensions.get('window');
 const primaryColor = 'black';
 const secondaryColor = '#ebefee';
 const tertiaryColor = 'white';
 const fourthColor = 'grey';
 const Footer = ({handlePageChange}) => {
+  const navigation = useNavigation();
 
   return (
     <View style={styles.footerMainContainer}>
@@ -30,7 +32,7 @@ const Footer = ({handlePageChange}) => {
       </Pressable>
       <Pressable
         onPress={() => {
-          handlePageChange(3)
+          handlePageChange(3) 
         }}>
         <View style={styles.buttonContainer}>
           <MTIcon name="robot-happy-outline" size={30} color={primaryColor} />

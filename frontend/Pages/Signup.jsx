@@ -14,7 +14,13 @@ import SignUpStepTwo from '../Components/SignUpComponents.js/SignUpStepTwo';
 import SignUpStepThree from '../Components/SignUpComponents.js/SignUpStepThree';
 import {styles} from '../Styles/authStyles';
 const {width} = Dimensions.get('window').width;
+import {UserContext} from '../App'; // Import from App.js
+import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
+import RotatingGearLoader from '../Components/RotatingGearLoader';
 function Signup() {
+  const navigation = useNavigation();
+  const {setUser} = useContext(UserContext);
   const [step, setStep] = useState(1);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -91,7 +97,27 @@ function Signup() {
       return;
     }
 
-    
+    const name = firstName;
+    try {
+      const response = await axios.post(
+        'https://trad-com-production.up.railway.app/consumer/create',
+        {
+          name: firstName,
+          email: email,
+          password: password,
+          aadhaar: aadhar,
+          phone: 1212121212,
+          address: {
+            apartment_number: '101',
+            building: 'Sunshine Apartments',
+            landmark: 'Near City Park',
+            pin: '560001',
+            street: 'Main Street',
+          },
+        },
+      );
+      console.log(response.data);
+      if (response.data) {
         setUser({
           name,
           lastName,
@@ -102,12 +128,21 @@ function Signup() {
           userType,
           service,
         });
-       
+        setLoading(false);
+        
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+    navigation.navigate('LandingPage');
   };
 
   return (
     <>
-      
+      {loading && <RotatingGearLoader /> ? (
+        <RotatingGearLoader />
+      ) : (
         <ImageBackground
           source={require('../assets/LoginPageImage.jpg')}
           style={styles.backgroundImage}
@@ -163,7 +198,7 @@ function Signup() {
             </View>
           </ScrollView>
         </ImageBackground>
-      
+      )}
     </>
   );
 }

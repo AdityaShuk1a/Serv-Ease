@@ -9,9 +9,11 @@ import {
   StatusBar,
 } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 const {height} = Dimensions.get('window').height;
 const {width} = Dimensions.get('window').width;
 const ConsumerHomePage = () => {
+  const navigation = useNavigation();
   return (
     <ScrollView style={{flex: 1}}>
       <StatusBar backgroundColor="black" barStyle="light-content" />
@@ -29,7 +31,9 @@ const ConsumerHomePage = () => {
           EASY • PEEZY • SERVICE • BREEZY
         </Text>
         <View style={styles.bottomContainer}>
-          <View style={styles.bottomInnerContainer}>
+          <Pressable style={styles.bottomInnerContainer} onPress={() => {
+              navigation.navigate('BookAService');
+          }} >
             <View style={styles.bottomInnerTextContainer}>
               <View>
                 <Text style={styles.bottomInnerText} numberOfLines={2}>
@@ -40,16 +44,18 @@ const ConsumerHomePage = () => {
                 </Text>
               </View>
             </View>
+
             <View style={styles.bottomInnerImageContainer}>
               <Image
                 source={require('../../assets/HomeBottomContainerImage.png')}
                 style={styles.bottomInnerImage}
               />
             </View>
-          </View>
+          </Pressable>
         </View>
         <View style={styles.bottomSecondContainer}>
-          <View style={styles.bottomInnerContainer}>
+          
+          <Pressable style={styles.bottomInnerContainer} onPress={() => { }} >
             <View style={styles.bottomInnerImageContainer}>
               <Image
                 source={require('../../assets/HomeBottomClipboardImage.png')}
@@ -66,7 +72,7 @@ const ConsumerHomePage = () => {
                 </Text>
               </View>
             </View>
-          </View>
+          </Pressable>
         </View>
       </View>
     </ScrollView>

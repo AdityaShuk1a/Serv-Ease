@@ -29,7 +29,7 @@ function BookAService() {
 
         <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}>
           <View style={styles.UpperRightDiv}></View>
-          <Image style={{ width: 65, height: 65, marginTop: 10 }} source={require('./assets/glitter-2-svgrepo-com.png')} />
+          <Image style={{ width: 65, height: 65, marginTop: 10 }} source={require('.././assets/glitter-2-svgrepo-com.png')} />
         </View>
       </View>
 

@@ -7,16 +7,52 @@ import {
     Dimensions,
   } from 'react-native';
   import React, {useState, useContext, useEffect} from 'react';
+  import ProfileTopButtons from '../Components/ProfilePageComponentes/ProfileTopButtons';
+  import ProfileBottomComponent from '../Components/ProfilePageComponentes/ProfileBottomComponent';
+  import {UserContext} from '../App';
+  import Footer from '../Components/HomePageComponents/Footer';
   const primaryColor = '#026977';
   const secondaryColor = '#f6f6f6';
   const tertiaryColor = 'white';
   const fourthColor = 'grey';
   const fifthColor = '#30db86';
+  import axios from 'axios';
   const {height} = Dimensions.get('window').height;
   const {width} = Dimensions.get('window').width;
   const Profile = () => {
-    
-    
+    const {user, setUser} = useContext(UserContext);
+    const userData = user;
+    const [customData, setCustomData] = useState();
+    const [data, setData] = useState([
+      {
+        id: '1',
+        name: 'John Doe',
+        serviceType: 'Cleaning',
+        rating: '4.5',
+      },
+      {
+        id: '2',
+        name: 'Mallu Doe',
+        serviceType: 'BartanDhoing',
+        rating: '6.9',
+      },
+      {
+        id: '3',
+        name: 'Katrina Saif',
+        serviceType: 'Nachni',
+        rating: '1.9',
+      },
+      {
+        id: '4',
+        name: 'Bondu Singh',
+        serviceType: 'Driver',
+        rating: '4.9',
+      },
+    ]);
+  
+    useEffect(() => {
+      console.log(userData);
+    }, [userData]);
   
     return (
       <>
@@ -34,21 +70,35 @@ import {
             </View>
             <View>
               <View>
-                <Text style={styles.topContainerInnerText}>Dynamic name</Text>
+                <Text style={styles.topContainerInnerText}>{userData.name}</Text>
               </View>
               <View>
                 <Text style={styles.topContainerInnerSmallText}>
-                  DynamicMail
+                  {userData.email}
                 </Text>
               </View>
             </View>
             <View style={styles.topContainerInnerBottomContainer}>
-              
+              <ProfileTopButtons icon="home-outline" />
+              <ProfileTopButtons icon="notifications-outline" />
+              <ProfileTopButtons icon="pencil" />
             </View>
           </View>
           <ScrollView style={styles.bottomContainer}>
             <Text style={styles.bottomContainerInnerText}>Status</Text>
-            
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.cards}>
+              {data.map(item => (
+                <ProfileBottomComponent
+                  key={item.id}
+                  name={item.name}
+                  serviceType={item.serviceType}
+                  rating={item.rating}
+                />
+              ))}
+            </ScrollView>
           </ScrollView>
           
         </ScrollView>
