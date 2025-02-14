@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -13,148 +13,125 @@ import {
   Keyboard,
   ScrollView
 } from 'react-native';
-import {styles} from '../Styles/authStyles';
-import {useNavigation} from '@react-navigation/native';
+import { styles } from '../Styles/authStyles';
+import { useNavigation } from '@react-navigation/native';
 import { useContext } from 'react';
 import { UserContext } from '../App';
 import axios from 'axios';
-const {height} = Dimensions.get('window'); // Get screen height
+import RotatingGearLoader from '../Components/RotatingGearLoader';
+
+const { height } = Dimensions.get('window'); // Get screen height
 const secondaryColor = '#ebefee';
 
 function Login() {
-  const {user , setUser} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [data, setData] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
-  useEffect(() => {
-    const authUser = async ()  => {
-      const getData = await axios
-        .get('https://trad-com-production.up.railway.app/consumer/all', {
-          email: data.email,
-          password: data.password,
-        })
-        .then(response => {
-          setData(response.data);
-          console.log(response.data);
-    });
-    };
-    authUser()
-  }, []);
 
-  const handleSubmit = () => {
-    if (!email.includes('@') || !email.includes('.')) {
-      alert('Please enter a valid email');
-      return;
-    }
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post('https://code-a-haunt-production-0c59.up.railway.app/auth/login', {
+        email,
+        password,
+      });
 
-    if (password.length < 5 || password.includes(' ')) {
-      alert(
-        'Password must be at least 5 characters long and should not contain spaces',
-      );
-      return;
-    }
-
-    let hasUpper = false,
-      hasLower = false,
-      hasNumber = false;
-    for (let char of password) {
-      if (char >= 'A' && char <= 'Z') hasUpper = true;
-      if (char >= 'a' && char <= 'z') hasLower = true;
-      if (char >= '0' && char <= '9') hasNumber = true;
-    }
-
-    if (!(hasUpper && hasLower && hasNumber)) {
-      alert(
-        'Password must contain at least one uppercase letter, one lowercase letter, and one number',
-      );
-      return;
-    }
-
-    const user = data.find(value => value.email === email && value.password === password);
-    if (user) {
-      setUser(user);
-      console.log(user);
+      if (!response.data.user_data.user_data.category ) {
+        setData({...response.data.user_data.user_data, serviceType: '0'});
+        setUser({...response.data.user_data.user_data, serviceType: '0'});
+      } else {
+        setData({...response.data.user_data.user_data, serviceType: '1'});
+        setUser({...response.data.user_data.user_data, serviceType: '1'});
+      }
+      console.log(response.data.user_data.user_data);
       alert('Login successful');
+      setIsLoading(false);
       navigation.navigate('LandingPage');
-    } else {
+    } catch (error) {
       alert('Invalid credentials');
+      setIsLoading(false);
     }
   };
 
   return (
-   
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'android' ? 'padding' : 'height'}
-        style={{flex: 1}}>
-        <ImageBackground
-          source={require('../assets/LoginPageImage.jpg')}
-          style={styles.backgroundImage}>
-          <View style={styles.overlay}>
-            <Text style={styles.title}>Hello!</Text>
-            <Text style={styles.subtitle}>Welcome to ServEase</Text>
-          </View>
-
-          {/* Bottom Card */}
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              backgroundColor: secondaryColor,
-              height: height * 0.62, // 55% of screen height
-              width: '100%',
-              borderTopLeftRadius: 30,
-              borderTopRightRadius: 30,
-              alignItems: 'center',
-              padding: 20,
-            }}>
-            <View style={styles.innerContainer}>
-              <Text style={styles.loginText}>Login</Text>
-
-              <TextInput
-              placeholderTextColor="black"
-                value={email}
-                onChangeText={text => setEmail(text)}
-                placeholder="Email"
-                style={styles.input}
-                keyboardType="email-address"
-              />
-              <TextInput
-              placeholderTextColor="black"
-                value={password}
-                onChangeText={text => setPassword(text)}
-                placeholder="Password"
-                secureTextEntry
-                style={styles.input}
-              />
-
-              <Text style={styles.forgotPassword}>Forgot Password?</Text>
-
-              <Pressable onPress={handleSubmit} style={styles.loginButton}>
-                <Text style={styles.loginButtonText}>Login</Text>
-              </Pressable>
-
-              {/* <View style={styles.dividerContainer}>
-                <View style={styles.divider} />
-                <Text style={styles.orText}>Or login with</Text>
-                <View style={styles.divider} />
-              </View> */}
-              <Pressable
-                onPress={() => {
-                  navigation.navigate('Signup');
-                }}>
-                <Text style={styles.signupText}>
-                  Not have a account? Sign Up
-                </Text>
-              </Pressable>
+    isLoading ? (
+      <RotatingGearLoader />
+    ) : (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'android' ? 'padding' : 'height'}
+          style={{ flex: 1 }}>
+          <ImageBackground
+            source={require('../assets/LoginPageImage.jpg')}
+            style={styles.backgroundImage}>
+            <View style={styles.overlay}>
+              <Text style={styles.title}>Hello!</Text>
+              <Text style={styles.subtitle}>Welcome to ServEase</Text>
             </View>
-          </View>
-        </ImageBackground>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
 
-      );
+            {/* Bottom Card */}
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                backgroundColor: secondaryColor,
+                height: height * 0.62, // 55% of screen height
+                width: '100%',
+                borderTopLeftRadius: 30,
+                borderTopRightRadius: 30,
+                alignItems: 'center',
+                padding: 20,
+              }}>
+              <View style={styles.innerContainer}>
+                <Text style={styles.loginText}>Login</Text>
+
+                <TextInput
+                  placeholderTextColor="black"
+                  value={email}
+                  onChangeText={text => setEmail(text)}
+                  placeholder="Email"
+                  style={styles.input}
+                  keyboardType="email-address"
+                />
+                <TextInput
+                  placeholderTextColor="black"
+                  value={password}
+                  onChangeText={text => setPassword(text)}
+                  placeholder="Password"
+                  secureTextEntry
+                  style={styles.input}
+                />
+
+                <Text style={styles.forgotPassword}>Forgot Password?</Text>
+
+                <Pressable onPress={handleSubmit} style={styles.loginButton}>
+                  <Text style={styles.loginButtonText}>Login</Text>
+                </Pressable>
+
+                {/* <View style={styles.dividerContainer}>
+                  <View style={styles.divider} />
+                  <Text style={styles.orText}>Or login with</Text>
+                  <View style={styles.divider} />
+                </View> */}
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate('Signup');
+                  }}>
+                  <Text style={styles.signupText}>
+                    Not have a account? Sign Up
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+          </ImageBackground>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    )
+  );
 }
-
 export default Login;
+
+

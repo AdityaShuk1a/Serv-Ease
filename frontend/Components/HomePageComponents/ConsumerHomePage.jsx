@@ -55,7 +55,9 @@ const ConsumerHomePage = () => {
         </View>
         <View style={styles.bottomSecondContainer}>
           
-          <Pressable style={styles.bottomInnerContainer} onPress={() => { }} >
+          <Pressable style={styles.bottomInnerContainer} onPress={() => { 
+            navigation.navigate('OrderHistory');
+          }} >
             <View style={styles.bottomInnerImageContainer}>
               <Image
                 source={require('../../assets/HomeBottomClipboardImage.png')}

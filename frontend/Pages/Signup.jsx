@@ -98,43 +98,85 @@ function Signup() {
     }
 
     const name = firstName;
-    try {
-      const response = await axios.post(
-        'https://trad-com-production.up.railway.app/consumer/create',
-        {
-          name: firstName,
-          email: email,
-          password: password,
-          aadhaar: aadhar,
-          phone: 1212121212,
-          address: {
-            apartment_number: '101',
-            building: 'Sunshine Apartments',
-            landmark: 'Near City Park',
-            pin: '560001',
-            street: 'Main Street',
+    if (userType === "0"){
+      try {
+        const response = await axios.post(
+          `https://code-a-haunt-production-0c59.up.railway.app/auth/register/${userType}`,
+          {
+            name: firstName,
+            email: email,
+            password: password,
+            aadhaar: aadhar,
+            phone: 1212121212,
+            address: {
+              apartment_number: '101',
+              building: 'Sunshine Apartments',
+              landmark: 'Near City Park',
+              pin: '560001',
+              street: 'Main Street',
+            },
           },
-        },
-      );
-      console.log(response.data);
-      if (response.data) {
-        setUser({
-          name,
-          lastName,
-          middleName,
-          email,
-          password,
-          aadhar,
-          userType,
-          service,
-        });
+        );
+        console.log(response.data);
+        if (response.data) {
+          setUser({
+            name,
+            lastName,
+            middleName,
+            email,
+            password,
+            aadhar,
+            userType,
+            service,
+          });
+          setLoading(false);
+          
+        }
+      } catch (error) {
         setLoading(false);
-        
+        console.error(error);
+      } 
+    }else{
+      try {
+        const response = await axios.post(
+          `https://code-a-haunt-production-0c59.up.railway.app/auth/register/${userType}`,
+          {
+            name: firstName,
+            email: email,
+            password: password,
+            aadhaar: aadhar,
+            phone: 1212121212,
+            address: {
+              apartment_number: '101',
+              building: 'Sunshine Apartments',
+              landmark: 'Near City Park',
+              pin: '560001',
+              street: 'Main Street',
+            },
+            "category": service
+          },
+        );
+        console.log(response.data);
+        if (response.data) {
+          setUser({
+            name,
+            lastName,
+            middleName,
+            email,
+            password,
+            aadhar,
+            userType,
+            service,
+          });
+          setLoading(false);
+          
+        }
+      } catch (error) {
+        setLoading(false);
+        console.error(error);
       }
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
     }
+    
     navigation.navigate('LandingPage');
   };
 

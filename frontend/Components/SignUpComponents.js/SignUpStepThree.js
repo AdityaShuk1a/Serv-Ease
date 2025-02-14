@@ -11,7 +11,7 @@ import { radioButtonStyles } from "../../Styles/radioButtonStyle";
  */
 const SignUpStepThree = ({ handleStepThree, handleSubmit }) => {
   const [aadhar, setAadhar] = useState("");
-  const [userType, setUserType] = useState("consumer");
+  const [userType, setUserType] = useState("0");
   const [service, setService] = useState("");
   useEffect(() => {
     handleStepThree(aadhar, service, userType);
@@ -30,11 +30,11 @@ const SignUpStepThree = ({ handleStepThree, handleSubmit }) => {
       <View style={radioButtonStyles.radioContainer}>
         <TouchableOpacity
           style={radioButtonStyles.radioButton}
-          onPress={() => setUserType("consumer")}
+          onPress={() => setUserType("0")}
         >
           <View
             style={
-              userType === "consumer"
+              userType === "0"
                 ? radioButtonStyles.radioSelected
                 : radioButtonStyles.radioUnselected
             }
@@ -44,11 +44,11 @@ const SignUpStepThree = ({ handleStepThree, handleSubmit }) => {
 
         <TouchableOpacity
           style={radioButtonStyles.radioButton}
-          onPress={() => setUserType("serviceProvider")}
+          onPress={() => setUserType("1")}
         >
           <View
             style={
-              userType === "serviceProvider"
+              userType === "1"
                 ? radioButtonStyles.radioSelected
                 : radioButtonStyles.radioUnselected
             }
@@ -60,7 +60,7 @@ const SignUpStepThree = ({ handleStepThree, handleSubmit }) => {
       </View>
 
       {/* Conditional Input for Service Provider */}
-      {userType === "serviceProvider" && (
+      {userType === "1" && (
         <TextInput
         placeholderTextColor="grey"
           placeholder="Enter your service"
@@ -76,3 +76,4 @@ const SignUpStepThree = ({ handleStepThree, handleSubmit }) => {
 };
 
 export default SignUpStepThree;
+

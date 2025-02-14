@@ -10,6 +10,7 @@ import Home from './Pages/Home';
 import chatBot from './Pages/ChatBot';
 import LandingPage from './Pages/LandingPage';
 import BookAService from './Pages/BookAService';
+import OrderHistory from './Pages/OrderHistory';
 export const UserContext = createContext(); // Define context here
 
 const Stack = createStackNavigator();
@@ -20,7 +21,7 @@ export default function App() {
   return (
     <UserContext.Provider value={{user, setUser}}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="LandingPage">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Signup"
             component={Signup}
@@ -34,7 +35,7 @@ export default function App() {
           <Stack.Screen
             name="BookAService"
             component={BookAService}
-            options={{headerShown: false}}
+            
           />
           <Stack.Screen
             name="chatBot"
@@ -55,6 +56,11 @@ export default function App() {
             name="Profile"
             component={Profile}
             options={{animation: 'none', headerShown: false}}
+          />
+          <Stack.Screen
+            name="OrderHistory"
+            component={OrderHistory}
+           
           />
         </Stack.Navigator>
       </NavigationContainer>
