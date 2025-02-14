@@ -43,7 +43,7 @@ const OrderHistory = () => {
   return (
     <>
       <View style={styles.mainContainer}>
-        <Text>hellol</Text>
+        <Text>hellahsdbashdbashdol</Text>
       </View>
     </>
   );
