@@ -4,6 +4,7 @@ import OrderHistory from './Pages/OrderHistory'
 import Signup from './Pages/Signup'
 import Login from './Pages/Login'
 import Profile from './Pages/Profile'
+import LandingPage from './Pages/LandingPage'
 
 const App = () => {
   return (
@@ -11,7 +12,8 @@ const App = () => {
     {/* <OrderHistory /> */}
     {/* <Signup /> */}
     {/* <Login /> */}
-    <Profile />
+    {/* <Profile /> */}
+    <LandingPage />
     </>
   )
 }
