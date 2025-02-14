@@ -41,7 +41,7 @@ const OrderHistory = () => {
   }
   ,
   {
-    "id" : 6,
+    "id" : 7,
     "titile" : "AC Repair",
     "Done by" : "John Doe",
     "date" : "10/10/2021"
@@ -56,7 +56,7 @@ const OrderHistory = () => {
     <View style={styles.mainContainer}>
       <ScrollView style={styles.cardContainer} >
       {history.map((items)=>(
-        <OrderHistoryCard title={items.titile} name={items["Done by"]} date={items.date} />
+        <OrderHistoryCard key={items.id} title={items.titile} name={items["Done by"]} date={items.date} />
       ))}
       </ScrollView>
       

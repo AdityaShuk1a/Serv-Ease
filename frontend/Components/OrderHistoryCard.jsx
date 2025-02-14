@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const OrderHistoryCard = ({ title, name, date }) => {
   return (
@@ -10,6 +11,11 @@ const OrderHistoryCard = ({ title, name, date }) => {
       <View style={styles.infoContainer}>
         <Text style={styles.info}>Completed by: {name}</Text>
         <Text style={styles.info}>Completed on: {date}</Text>
+        <View style={styles.rating} >
+        <Text style={styles.info}>Rating: </Text>
+        <Icon name='star' ></Icon>
+        </View>
+        
       </View>
     </View>
   )
@@ -43,5 +49,9 @@ const styles = StyleSheet.create({
   },
   info: {
     fontSize: 18,
+  },
+  rating: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 })
