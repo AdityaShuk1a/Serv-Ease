@@ -6,6 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
 
+import ImagePicker from 'react-native-image-picker';
 // import ProgressBar from './ProgressBar';
 // import ImagePicker from 'react-native-image-picker';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
@@ -79,7 +80,7 @@ d
 
         <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}>
           <View style={styles.UpperRightDiv}></View>
-          <Image style={[{ width: 65, height: 65, marginTop: 10 }, imageFilter]} source={require('./assets/glitter-2-svgrepo-com.png')} />
+          <Image style={[{ width: 65, height: 65, marginTop: 10 }, imageFilter]} source={require('.././assets/glitter-2-svgrepo-com.png')} />
 
         </View>
       </View>

@@ -13,10 +13,13 @@ import {
   import Footer from '../Components/HomePageComponents/Footer';
   const primaryColor = '#026977';
   const secondaryColor = '#f6f6f6';
+  const thirdColor = '#ebefee';
+  import ConsumerProfileView from '../Components/ProfilePageComponentes/ConsumerProfileView';
   const tertiaryColor = 'white';
   const fourthColor = 'grey';
   const fifthColor = '#30db86';
   import axios from 'axios';
+import ProfileServiceProvider from '../Components/ProfilePageComponentes/ProfileServiceProvider';
   const {height} = Dimensions.get('window').height;
   const {width} = Dimensions.get('window').width;
   const Profile = () => {
@@ -70,11 +73,11 @@ import {
             </View>
             <View>
               <View>
-                <Text style={styles.topContainerInnerText}>{userData.name}</Text>
+                <Text style={styles.topContainerInnerText}>{user.name}</Text>
               </View>
               <View>
                 <Text style={styles.topContainerInnerSmallText}>
-                  {userData.email}
+                  {user.email}
                 </Text>
               </View>
             </View>
@@ -84,23 +87,15 @@ import {
               <ProfileTopButtons icon="pencil" />
             </View>
           </View>
-          <ScrollView style={styles.bottomContainer}>
-            <Text style={styles.bottomContainerInnerText}>Status</Text>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={styles.cards}>
-              {data.map(item => (
-                <ProfileBottomComponent
-                  key={item.id}
-                  name={item.name}
-                  serviceType={item.serviceType}
-                  rating={item.rating}
-                />
-              ))}
-            </ScrollView>
-          </ScrollView>
-          
+          <View style={{
+            flex : 1
+          }} >
+          {userData.userType === "0" || userData.serviceType === "0" ? (
+              <ConsumerProfileView data={data} />
+            ) : (
+              <ProfileServiceProvider />
+            )}
+          </View>
         </ScrollView>
         
       </>
