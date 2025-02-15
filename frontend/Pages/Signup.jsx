@@ -186,7 +186,7 @@ function Signup() {
         <RotatingGearLoader />
       ) : (
         <ImageBackground
-          source={require('../assets/LoginPageImage.jpg')}
+          source={require('../assets/ServEaseLogoBanner.png')}
           style={styles.backgroundImage}
           resizeMode="cover">
           <View style={styles2.title}>

@@ -2,7 +2,7 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const { height } = Dimensions.get("window");
 
-const primaryColor = "#026977";
+const primaryColor = "#84B138";
 const secondaryColor = "white";
 const tertiaryColor = "white";
 const fourthColor = "grey";
@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-    resizeMode: "cover",
+    resizeMode: "center",
   },
   overlay: {
     position: "absolute",

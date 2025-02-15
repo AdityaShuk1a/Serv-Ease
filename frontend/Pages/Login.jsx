@@ -65,7 +65,7 @@ function Login() {
           behavior={Platform.OS === 'android' ? 'padding' : 'height'}
           style={{ flex: 1 }}>
           <ImageBackground
-            source={require('../assets/LoginPageImage.jpg')}
+            source={require('../assets/ServEaseLogoBanner.png')}
             style={styles.backgroundImage}>
             <View style={styles.overlay}>
               <Text style={styles.title}>Hello!</Text>
