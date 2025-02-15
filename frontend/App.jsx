@@ -10,6 +10,7 @@ import Home from './Pages/Home';
 import chatBot from './Pages/ChatBot';
 import LandingPage from './Pages/LandingPage';
 import BookAService from './Pages/BookAService';
+import OfferPage from './Pages/OfferPage';
 import OrderHistory from './Pages/OrderHistory';
 export const UserContext = createContext(); // Define context here
 
@@ -25,6 +26,11 @@ export default function App() {
           <Stack.Screen
             name="Signup"
             component={Signup}
+            options={{animationEnabled: true, animation: 'slide_from_right', headerShown: false}}
+          />
+          <Stack.Screen
+            name="OfferPage"
+            component={OfferPage}
             options={{animationEnabled: true, animation: 'slide_from_right', headerShown: false}}
           />
           <Stack.Screen

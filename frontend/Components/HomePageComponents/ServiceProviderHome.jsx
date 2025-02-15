@@ -7,13 +7,32 @@ import {
   ScrollView,
   Pressable,
   StatusBar,
+  FlatList,
 } from 'react-native';
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 const {height} = Dimensions.get('window').height;
 const {width} = Dimensions.get('window').width;
-const ConsumerHomePage = () => {
+import ServiceProviderRequestListItems from '../ServiceProviderRequestListItems';
+const ServiceProviderHome = () => {
   const navigation = useNavigation();
+  const [req, setReq] = useState([]);
+  useEffect(() => {
+    const getReq = async () => {
+      try {
+        const response = await axios.get(
+          'https://code-a-haunt-production-0c59.up.railway.app/request/all',
+        );
+        const data = response.data;
+        console.log(data);
+        setReq(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getReq();
+  }, []);
   return (
     <ScrollView style={{flex: 1}}>
       <StatusBar backgroundColor="black" barStyle="light-content" />
@@ -30,56 +49,25 @@ const ConsumerHomePage = () => {
         <Text style={styles.advertisementText}>
           EASY • PEEZY • SERVICE • BREEZY
         </Text>
-        <View style={styles.bottomContainer}>
-          <Pressable style={styles.bottomInnerContainer} onPress={() => {
-              navigation.navigate('BookAService');
-          }} >
-            <View style={styles.bottomInnerTextContainer}>
-              <View>
-                <Text style={styles.bottomInnerText} numberOfLines={2}>
-                  Book a
-                </Text>
-                <Text style={styles.bottomInnerText} numberOfLines={2}>
-                  Service
-                </Text>
-              </View>
-            </View>
-
-            <View style={styles.bottomInnerImageContainer}>
-              <Image
-                source={require('../../assets/HomeBottomContainerImage.png')}
-                style={styles.bottomInnerImage}
+        <FlatList
+          data={req}
+          renderItem={({item}) => {
+            return (
+              <ServiceProviderRequestListItems
+                item={item}
+                title={item.category}
+                description={item.description}
               />
-            </View>
-          </Pressable>
-        </View>
-        <View style={styles.bottomSecondContainer}>
-          
-          <Pressable style={styles.bottomInnerContainer} onPress={() => { }} >
-            <View style={styles.bottomInnerImageContainer}>
-              <Image
-                source={require('../../assets/HomeBottomClipboardImage.png')}
-                style={styles.bottomSecondInnerImage}
-              />
-            </View>
-            <View style={styles.bottomInnerTextContainer}>
-              <View>
-                <Text style={styles.bottomInnerText} numberOfLines={2}>
-                  Recent
-                </Text>
-                <Text style={styles.bottomInnerText} numberOfLines={2}>
-                  Bookings
-                </Text>
-              </View>
-            </View>
-          </Pressable>
-        </View>
+            );
+          }}
+          contentContainerStyle={{paddingTop: 40}}
+        />
       </View>
     </ScrollView>
   );
 };
 
-export default ConsumerHomePage;
+export default ServiceProviderHome;
 
 const styles = StyleSheet.create({
   title: {
@@ -113,16 +101,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     // alignItems : "center",
     justifyContent: 'left',
-  },
-  bottomInnerImage: {
-    borderRadius: 50,
-    width: 200,
-    height: 300,
-  },
-  advertisementImage: {
-    height: 300,
-    width: width,
-    borderRadius: 50,
   },
   bottomInnerTextContainer: {
     flex: 1,
@@ -183,3 +161,4 @@ const styles = StyleSheet.create({
     height: 250,
   },
 });
+

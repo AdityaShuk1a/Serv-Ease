@@ -8,42 +8,51 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
 const { width } = Dimensions.get('window');
 import MTIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Feather';
 
 const ChatBot = () => {
   const [userInput, setUserInput] = useState('');
-  const [chat, setChat] = useState([
-    { text: 'Hello, how can I help you?', isUser: false },
-  ]);
+  const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
+  const scrollViewRef = useRef();
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!userInput.trim()) return;
-    
-    const newChat = [...chat, { text: userInput, isUser: true }];
-    setChat(newChat);
-    setUserInput('');
     setLoading(true);
-
-    setTimeout(() => {
-      setChat([...newChat, { text: 'I am typing...', isUser: false }]);
-    }, 500);
-
-    setTimeout(() => {
-      setChat([...newChat, { text: 'This is a sample response.', isUser: false }]);
-      setLoading(false);
-    }, 1500);
+    setChat(prevChat => [...prevChat, { text: userInput, isUser: true }]);
+    setUserInput('');
+    const response = await axios.post("https://code-a-haunt-production-0c59.up.railway.app/chatbot/stream", { message: userInput })
+      if(response.data){
+        console.log(response.data)
+        setChat(prevChat => [...prevChat, { text: response.data, isUser: false }]);
+        setLoading(false);
+      }else{
+        setChat(prevChat => [...prevChat, { text: response.data, isUser: false }]);
+        setLoading(false);
+      }
+        
+      
+      
   };
+
+  useEffect(() => {
+    scrollViewRef.current?.scrollToEnd({ animated: true });
+  }, [chat]);
 
   return (
     <>
       <View style={styles.title}>
         <Text style={styles.titleText}>Servo</Text>
       </View>
-      <ScrollView style={styles.container} contentContainerStyle={styles.chatContainer}>
+      <ScrollView 
+        style={styles.container} 
+        contentContainerStyle={styles.chatContainer} 
+        ref={scrollViewRef}
+      >
         {chat.map((item, index) => (
           <View
             key={index}
