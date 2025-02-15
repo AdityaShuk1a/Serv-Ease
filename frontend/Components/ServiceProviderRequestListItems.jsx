@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Pressable, Dimensions} from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import {StyleSheet, View, Text, Pressable, Dimensions, Animated} from 'react-native';
 import axios from 'axios';
 import OfferPage from '../Pages/OfferPage';
 const {height} = Dimensions.get('window').height;
@@ -10,6 +10,24 @@ const tertiaryColor = 'white';
 const fourthColor = 'grey';
 import {useNavigation} from '@react-navigation/native';
 const ServiceProviderRequestListItems = ({item, title, description}) => {
+
+  const slideAnim = useRef(new Animated.Value(70)).current;
+  const AppearAnim = useRef(new Animated.Value(0)).current;  // Start off-screen
+
+  useEffect(() => {
+    Animated.timing(slideAnim, {
+      toValue: 0, // Move to position 0
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+
+    Animated.timing(AppearAnim, {
+      toValue: 1, // Move to position 0
+      duration: 1500,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   const [page, setPage] = useState(1);
   const navigation = useNavigation();
 console.log(item)
@@ -23,6 +41,7 @@ console.log(item)
 
   if (page === 1) {
     return (
+            <Animated.View style={{transform: [{translateY: slideAnim}]}}>
       <View style={styles.card}>
         <View style={styles.cardTopContainer}>
           <Text style={styles.cardTitle}>{title}</Text>
@@ -33,14 +52,19 @@ console.log(item)
             <Text style={styles.cardText}>{description}</Text>
           </View>
           <View style={styles.buttonContainer}>
-            <Pressable
-              onPress={handleAccept}
-              style={styles.button}>
-              <Text style={styles.buttonText}>Accept</Text>
-            </Pressable>
+            <Animated.View style={{opacity: AppearAnim}}>
+
+              <Pressable
+                onPress={handleAccept}
+                style={styles.button}>
+                <Text style={styles.buttonText}>Accept</Text>
+              </Pressable>
+
+            </Animated.View>
           </View>
         </View>
       </View>
+            </Animated.View>
     );
   } else if (page === 2) {
     return <OfferPage handleDone={handleDone} item={item}/>;

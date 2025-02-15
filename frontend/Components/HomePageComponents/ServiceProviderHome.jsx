@@ -8,8 +8,10 @@ import {
   Pressable,
   StatusBar,
   FlatList,
+  Animated,
+
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 const {height} = Dimensions.get('window').height;
@@ -18,6 +20,11 @@ import ServiceProviderRequestListItems from '../ServiceProviderRequestListItems'
 const ServiceProviderHome = () => {
   const navigation = useNavigation();
   const [req, setReq] = useState([]);
+
+  const slideAnim = useRef(new Animated.Value(-70)).current; // Start off-screen
+  const AppearAnim = useRef(new Animated.Value(0)).current; // Start off-screen
+
+
   useEffect(() => {
     const getReq = async () => {
       try {
@@ -32,6 +39,19 @@ const ServiceProviderHome = () => {
       }
     };
     getReq();
+
+    Animated.timing(slideAnim, {
+      toValue: 0, // Move to position 0
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+
+    Animated.timing(AppearAnim, {
+      toValue: 1, 
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+    
   }, []);
   return (
     <ScrollView style={{flex: 1}}>
@@ -46,10 +66,16 @@ const ServiceProviderHome = () => {
             style={styles.advertisementImage}
           />
         </View>
-        <Text style={styles.advertisementText}>
-        EASY ❇️ PEEZY ❇️ SERVICE ❇️ BREEZY
-        </Text>
-        <Text style={{fontSize: 30,fontWeight: 500, marginLeft: 20, marginTop: 50}}>Active Requests</Text>
+          <Animated.View style={{opacity: AppearAnim}}>
+
+            <Text style={styles.advertisementText}>
+              EASY ❇️ PEEZY ❇️ SERVICE ❇️ BREEZY
+            </Text>
+          </Animated.View>
+        <Animated.View style>
+
+          <Text style={{fontSize: 30,fontWeight: 500, marginLeft: 20, marginTop: 50}}>Active Requests</Text>
+        </Animated.View>
         <FlatList
           data={req}
           renderItem={({item}) => {
