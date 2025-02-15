@@ -42,13 +42,14 @@ const ServiceProviderHome = () => {
       <View style={styles.mainContainer}>
         <View style={styles.advertisement}>
           <Image
-            source={require('../../assets/advertisementImage.jpg')}
+            source={require('../../assets/ServEaseHomepageBanner.png')}
             style={styles.advertisementImage}
           />
         </View>
         <Text style={styles.advertisementText}>
-          EASY • PEEZY • SERVICE • BREEZY
+        EASY ❇️ PEEZY ❇️ SERVICE ❇️ BREEZY
         </Text>
+        <Text style={{fontSize: 30,fontWeight: 500, marginLeft: 20, marginTop: 50}}>Active Requests</Text>
         <FlatList
           data={req}
           renderItem={({item}) => {
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
   },
   advertisement: {
     overflow: 'hidden',
-    height: 300,
+    height: 225,
     width: width,
     borderWidth: 2,
     borderColor: 'black',
@@ -134,8 +135,8 @@ const styles = StyleSheet.create({
   },
   advertisementText: {
     marginTop: 10,
-    fontSize: 15,
-    fontWeight: '500',
+    fontSize: 18.5,
+    fontWeight: '700',
     color: 'black',
     textAlign: 'center',
   },
@@ -159,6 +160,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: 200,
     height: 250,
+  },
+  advertisementImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
   },
 });
 

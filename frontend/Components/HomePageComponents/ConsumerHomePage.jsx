@@ -23,12 +23,12 @@ const ConsumerHomePage = () => {
       <View style={styles.mainContainer}>
         <View style={styles.advertisement}>
           <Image
-            source={require('../../assets/advertisementImage.jpg')}
+            source={require('../../assets/ServEaseLogoBanner.png')}
             style={styles.advertisementImage}
           />
         </View>
         <Text style={styles.advertisementText}>
-          EASY • PEEZY • SERVICE • BREEZY
+          EASY ❇️ PEEZY ❇️ SERVICE ❇️ BREEZY
         </Text>
         <View style={styles.bottomContainer}>
           <Pressable style={styles.bottomInnerContainer} onPress={() => {

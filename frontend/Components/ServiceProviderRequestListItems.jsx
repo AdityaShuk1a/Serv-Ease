@@ -74,6 +74,8 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 16,
     color: fourthColor,
+    marginTop: 4.5,
+    marginLeft: 15,
   },
   cardRow: {
     flexDirection: 'row',
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button: {
-    backgroundColor: 'white',
+    backgroundColor: '#CFEC46',
     padding: 10,
     borderRadius: 10,
     borderWidth: 1,
