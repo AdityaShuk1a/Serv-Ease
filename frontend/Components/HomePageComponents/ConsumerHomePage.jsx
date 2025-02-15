@@ -47,7 +47,7 @@ const ConsumerHomePage = () => {
 
             <View style={styles.bottomInnerImageContainer}>
               <Image
-                source={require('../../assets/HomeBottomContainerImage.png')}
+                source={require('../../assets/BookAServiceUpdatedImage.png')}
                 style={styles.bottomInnerImage}
               />
             </View>
