@@ -6,8 +6,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
 
-import ProgressBar from './ProgressBar';
-import ImagePicker from 'react-native-image-picker';
+// import ProgressBar from './ProgressBar';
+// import ImagePicker from 'react-native-image-picker';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 
 const imageFilter = {
@@ -36,7 +36,7 @@ function BookAService() {
       quality: 1,
       includeBase64: false,
     };
-
+d
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
